@@ -12,7 +12,7 @@ app.setApplicationName('CSM_3')
 form = MainWindow()
 form.setWindowTitle('Лабораторная работа №3')
 form.show()
-FadingOscillation(1,1)
-
+f = FadingOscillation(1,2)
+f.test_ls()
 # -----------------------------------------------------#
 sys.exit(app.exec_())
