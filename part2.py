@@ -27,24 +27,26 @@ def distr(distr, scale, size):
     :return:
     """
     if distr == True:
-        return ksi_un(scale, size = size)
+        return ksi_un(np.sqrt(3*scale), size = size)
     else:
-        return np.random.normal(0, scale, size)
+        return np.random.normal(0, np.sqrt(scale), size)
 
 
-def manage(n = 10, m = 3, scale = 1, scale_x_a = 0, scale_x_b = 1, distr_ksi = False, Theta = np.array([])):
+def manage(n = 10, m = 3, Theta = np.array([]), X=np.array([]),ksi = np.array([])):
     assert(Theta.shape[0] == m and Theta.shape[1] == 1)
+    assert(X.shape == (n,m))
     assert(n > m)
-    ksi = distr(distr_ksi, scale, size = (n,1))
-    X = ksi_un(scale_x_a, scale_x_b, size = (n,m))
     y = get_y(X, Theta)
     y_ksi = y+ksi
+    theta = []
     rss = []
-    for theta, rsss in recursive_lsq(X, y_ksi.T[0]):
-        rss.append(rsss)
+    for Theta, Rss in recursive_lsq(X, y_ksi.T[0]):
+        theta.append(Theta)
+        rss.append(Rss)
+    y_real = np.dot(X, theta[-1])
     t, r1, r2, r3 = getPlotData(n, rss)
-    plot(t,r1, r2, r3)
-    input()
+    ret = dict(y_gen = y, y_ksi = y_ksi, y_restored = y_real,rsa = r1, cp = r2, fse = r3)
+    return ret
 
 def get_y(X, theta):
     return np.dot(X, theta)
@@ -59,7 +61,8 @@ def getPlotData(n,rss:list):
         fpe.append((n+s)/(n-s)*rss[i])
     return t, rss, cp, fpe
 
-def plot(t, r1,r2, r3):
+def plot(r1,r2, r3):
+    t = np.arange(1,len(r1)+1)
     assert(len(t) == len(r1) == len(r2) == len(r3))
     plt.plot(t,r1, label = 'RSS')
     plt.plot(t,r2, label = 'CP')
@@ -74,8 +77,8 @@ def plot(t, r1,r2, r3):
 
 #X = np.array([[1, 1, 2], [3, 4, 5], [5, 6, 7]])
 
-Theta = np.array([1, 2, 3])[:, np.newaxis]
-manage(Theta = Theta)
+#Theta = np.array([1, 2, 3])[:, np.newaxis]
+#manage(Theta = Theta)
 
 
 
