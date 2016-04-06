@@ -45,6 +45,10 @@ class MainWindow(QDialog):
         model = FadingOscillation(delta, omega0)
         t_arr = np.arange(left, right, self.ui.stepBox.value())
         X = np.array(list(model(t_arr))).T
+        precision = self.ui.precisionBox.currentText()
+        if precision != 'max':
+            deg = int(precision)
+            X = np.round(10**deg * X) / 10**deg;
         self.ui.equationTable.setRowCount(len(t_arr))
         for i, row in enumerate(X):
             self.ui.equationTable.setItem(i, 0, QTableWidgetItem(str(row[0])))
