@@ -71,9 +71,9 @@ class MainWindow(QDialog):
             self.ui.equationTable.setItem(i, 1, QTableWidgetItem(str(row[1])))
             self.ui.equationTable.setItem(i, 2, QTableWidgetItem(str(-row[2])))
         theta_gen = recursive_lsq(X[:, :2], -X[:, 2])
-        theta_list = list(theta_gen)
+        theta_list = [theta for theta, rss in theta_gen]
         self.ui.thetaList.clear()
-        for theta, rss in theta_list:
+        for theta in theta_list:
             self.ui.thetaList.addItem(str(theta.tolist()))
         self.ui.deltaOutput.setText(str(theta_list[-1][1] / 2))
         self.ui.omegaOutput.setText(str(np.sqrt(theta_list[-1][0])))
