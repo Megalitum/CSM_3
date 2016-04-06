@@ -12,5 +12,7 @@ form = MainWindow()
 form.setWindowTitle('Лабораторная работа №3')
 form.show()
 
+from rlsm import test2
+test2()
 # -----------------------------------------------------#
 sys.exit(app.exec_())
