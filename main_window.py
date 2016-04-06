@@ -21,6 +21,18 @@ class MainWindow(QDialog):
         self.ui.omegaInput.setText(str(2.))
         self.ui.equationTable.setHorizontalHeaderLabels(["x", "x'", '-x"'])
         # << part 1
+        # part 2 >>
+        self.n = None
+        self.a = None
+        self.b = None
+        self.scale = None
+        self.normal_distr = None
+        self.X = None
+        self.ksi = None
+        self.rsa = None
+        self.cp = None
+        self.fse = None
+        # << part 2
 
     @pyqtSlot()
     def run_1(self):
@@ -64,7 +76,48 @@ class MainWindow(QDialog):
 
 
     @pyqtSlot()
-    def run_2(self):
+    def gen_X(self):
+        try:
+            self.n = self.ui.line_n.value()
+            if self.n <= 0:
+                raise ValueError("n <= 0")
+            self.a = np.float64(self.ui.line_a.text())
+            self.b = np.float64(self.ui.line_b.text())
+            if not np.isfinite([self.a, self.b]).all():
+                raise ValueError("Values are not finite.")
+            if self.a > self.b:
+                raise ValueError("a is greater than b.")
+        except ValueError as e:
+            QMessageBox.warning(self, "Invalid parameters", str(e))
+            return
+        self.ui.genKsiButton.setEnabled(True)
+        self.ui.tableX.clear()
+        self.ui.tableX.setRowCount(self.n)
+        self.ui.tableX.setColumnCount(self.n)
+
+    @pyqtSlot()
+    def gen_ksi(self):
+        try:
+            self.scale = np.float64(self.ui.line_scale.text())
+            if self.scale <= 0:
+                raise ValueError("scale <= 0")
+            if self.ui.distrBox.currentText() == "Uniform":
+                self.normal_distr = True
+            else:
+                self.normal_distr = False
+        except ValueError as e:
+            QMessageBox.warning(self, "Invalid parameters", str(e))
+            return
+        self.ui.ksiList.clear()
+        self.ui.ksiList.addItem('123')
+        self.ui.ksiList.addItem('12')
+
+    @pyqtSlot()
+    def change_s(self):
+        pass
+
+    @pyqtSlot()
+    def plot(self):
         pass
 
 
