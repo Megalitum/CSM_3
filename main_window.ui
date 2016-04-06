@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>693</width>
-    <height>757</height>
+    <width>709</width>
+    <height>754</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -471,10 +471,10 @@
           <item row="0" column="2">
            <widget class="QSpinBox" name="line_n">
             <property name="minimum">
-             <number>1</number>
+             <number>5</number>
             </property>
             <property name="value">
-             <number>5</number>
+             <number>10</number>
             </property>
            </widget>
           </item>
@@ -600,7 +600,7 @@
          </layout>
         </widget>
        </item>
-       <item row="3" column="0" colspan="2">
+       <item row="3" column="0">
         <widget class="QGroupBox" name="groupBox_10">
          <property name="minimumSize">
           <size>
@@ -663,7 +663,7 @@
          </layout>
         </widget>
        </item>
-       <item row="3" column="2">
+       <item row="3" column="1" colspan="2">
         <widget class="QGroupBox" name="groupBox_11">
          <property name="minimumSize">
           <size>
@@ -673,7 +673,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>151</width>
+           <width>300</width>
            <height>10000</height>
           </size>
          </property>

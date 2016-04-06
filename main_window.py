@@ -35,6 +35,7 @@ class MainWindow(QDialog):
         self.rss = None
         self.cp = None
         self.fpe = None
+        self.y_restored = None
         # << part 2
 
     @pyqtSlot()
@@ -72,7 +73,7 @@ class MainWindow(QDialog):
         theta_gen = recursive_lsq(X[:, :2], -X[:, 2])
         theta_list = list(theta_gen)
         self.ui.thetaList.clear()
-        for theta in theta_list:
+        for theta, rss in theta_list:
             self.ui.thetaList.addItem(str(theta.tolist()))
         self.ui.deltaOutput.setText(str(theta_list[-1][1] / 2))
         self.ui.omegaOutput.setText(str(np.sqrt(theta_list[-1][0])))
@@ -103,10 +104,9 @@ class MainWindow(QDialog):
                 self.ui.tableX.setItem(i, j, QTableWidgetItem(str(self.X[i, j])))
         if self.theta is None:
             self.ui.thetaTable.setEnabled(True)
-        if self.theta is None or self.theta.shape[0] != self.n:
-            self.theta = np.array([0] * self.n)
-            self.ui.thetaTable.setColumnCount(self.n)
-        for i in range(self.n):
+            self.theta = np.array([0] * self.m)
+            self.ui.thetaTable.setColumnCount(self.m)
+        for i in range(self.m):
             self.ui.thetaTable.setItem(0, i, QTableWidgetItem(str(self.theta[i])))
 
     @pyqtSlot()
@@ -126,15 +126,21 @@ class MainWindow(QDialog):
 
     @pyqtSlot()
     def change_s(self):
-        if self.rss is None or self.cp is None or self.fpe is None:
+        if self.rss is None or self.cp is None or self.fpe is None or self.y_restored is None:
             return
         self.ui.lineRSS.setText(str(self.rss[self.ui.box_s.currentIndex()]))
         self.ui.lineCP.setText(str(self.cp[self.ui.box_s.currentIndex()]))
         self.ui.lineFPE.setText(str(self.fpe[self.ui.box_s.currentIndex()]))
+        self.ui.y_restored.clear()
+        for y in self.y_restored[self.ui.box_s.currentIndex()]:
+            self.ui.y_restored.addItem(str(y))
+
 
     @pyqtSlot()
     def plot(self):
-        pass
+        if self.rss is None or self.cp is None or self.fpe is None:
+            return
+        plot(self.rss, self.cp, self.fpe)
 
     @pyqtSlot(int)
     def distr_changed(self, index):
@@ -145,10 +151,17 @@ class MainWindow(QDialog):
 
     @pyqtSlot()
     def calcY(self):
-        r = manage(self.n, self.m, self.theta, self.X, self.ksi)
+        r = manage(self.n, self.m, self.theta[:, np.newaxis], self.X, self.ksi)
         self.rss = r['rss']
         self.cp = r['cp']
         self.fpe = r['fse']
+        self.ui.y_clean.clear()
+        for y in r['y_gen']:
+            self.ui.y_clean.addItem(str(y))
+        self.ui.y_noised.clear()
+        for y in r['y_ksi']:
+            self.ui.y_noised.addItem(str(y))
+        self.y_restored = r['y_restored']
         self.change_s()
 
     @pyqtSlot(QTableWidgetItem)

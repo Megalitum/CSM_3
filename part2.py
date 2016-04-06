@@ -35,21 +35,20 @@ def distr(distr, scale, size):
 def manage(n = 10, m = 3, Theta = np.array([]), X=np.array([]),ksi = np.array([])):
     assert(Theta.shape[0] == m and Theta.shape[1] == 1)
     assert(X.shape == (n,m))
-    assert(n > m)
+    assert(n >= m)
     y = get_y(X, Theta)
-    y_ksi = y+ksi
-    theta = []
+    y_ksi = y + ksi.ravel()
     rss = []
-    for Theta, Rss in recursive_lsq(X, y_ksi.T[0]):
-        theta.append(Theta)
+    y_real = list()
+    for i, (Theta, Rss) in enumerate(recursive_lsq(X, y_ksi)):
         rss.append(Rss)
-    y_real = np.dot(X, theta[-1])
+        y_real.append(np.dot(X[:, :i + 1], Theta).ravel())
     t, r1, r2, r3 = getPlotData(n, rss)
-    ret = dict(y_gen = y, y_ksi = y_ksi, y_restored = y_real,rsa = r1, cp = r2, fse = r3)
+    ret = dict(y_gen = y, y_ksi = y_ksi, y_restored = y_real,rss = r1, cp = r2, fse = r3)
     return ret
 
 def get_y(X, theta):
-    return np.dot(X, theta)
+    return np.dot(X, theta).ravel()
 
 def getPlotData(n,rss:list):
     cp = []
@@ -67,7 +66,7 @@ def plot(r1,r2, r3):
     plt.plot(t,r1, label = 'RSS')
     plt.plot(t,r2, label = 'CP')
     plt.plot(t,r3, label = 'FPE')
-
+    plt.legend(loc='upper right')
     plt.xlabel(r'$s$')
     plt.grid(True)
     plt.title(r'$Criterion$')
