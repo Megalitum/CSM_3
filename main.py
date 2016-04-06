@@ -3,7 +3,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication
 from main_window import MainWindow
-from model import FadingOscillation
 
 app = QApplication(sys.argv)
 app.setApplicationName('CSM_3')
