@@ -175,7 +175,7 @@ class MainWindow(QDialog):
             if not np.isfinite(newvalue).all():
                 raise ValueError("Values are not finite.")
         except ValueError as e:
-            item.setText(str(self.theta[item.row()]))
+            item.setText(str(self.theta[item.column()]))
             return
-        self.theta[item.row()] = newvalue
+        self.theta[item.column()] = newvalue
 
