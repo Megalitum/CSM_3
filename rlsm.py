@@ -10,7 +10,9 @@ def recursive_lsq(w: np.array, y: np.array):
         gamma = np.dot(w[:, 0], y)
         nu = gamma / beta
         theta = np.array([nu])
-        yield theta, 0, nu**2*beta
+        vec = y - w[:,0] * theta
+        rss = np.dot(vec, vec)
+        yield theta, rss
         H_inv = np.array([[1/beta]])
         for i in range(1, m):
             h = np.dot(w[:, i], w[:, :i])
@@ -21,7 +23,8 @@ def recursive_lsq(w: np.array, y: np.array):
             nu = (gamma - np.dot(theta, h)) / beta
             theta -= nu * a
             theta = np.hstack((theta, nu))
-            yield theta, i, nu**2*beta
+            rss -= nu**2*beta
+            yield theta, rss
             h11 = H_inv + np.dot(a, a[:, np.newaxis]) / beta
             h12 = -a[:, np.newaxis] / beta
             h21 = -a / beta

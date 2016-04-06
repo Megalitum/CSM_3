@@ -39,6 +39,24 @@ def test(n = 10, m = 5, scale = 3, scale_x_a = 3, scale_x_b = 6, distr_ksi = Fal
 def get_y(X, theta):
     return np.dot(X, theta)
 
+def getPlotData(n,rss:list):
+    cp = []
+    fpe = []
+    t = np.arange(1,len(rss)+1)
+    for i in range(rss):
+        s = i+1
+        cp.append(rss[i] + 2*s)
+        fpe.append((n+s)/(n-s)*rss[i])
+    return t,rss, cp, fpe
+
+def plot(t, r1,r2, r3):
+    plt.plot(t,r1, label = 'RSS')
+    plt.plot(t,r2, label = 'CP')
+    plt.plot(t,r3, label = 'FPE')
+
+    plt.xlabel(r'$s$')
+    plt.grid(True)
+    plt.title(r'$Criteria$')
 test()
 
 
