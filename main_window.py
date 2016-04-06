@@ -21,6 +21,19 @@ class MainWindow(QDialog):
         self.ui.omegaInput.setText(str(2.))
         self.ui.equationTable.setHorizontalHeaderLabels(["x", "x'", '-x"'])
         # << part 1
+        # part 2 >>
+        self.n = None
+        self.a = None
+        self.b = None
+        self.theta = None
+        self.scale = None
+        self.normal_distr = False
+        self.X = None
+        self.ksi = None
+        self.rss = None
+        self.cp = None
+        self.fpe = None
+        # << part 2
 
     @pyqtSlot()
     def run_1(self):
@@ -64,7 +77,88 @@ class MainWindow(QDialog):
 
 
     @pyqtSlot()
-    def run_2(self):
+    def gen_X(self):
+        try:
+            self.n = self.ui.line_n.value()
+            if self.n <= 0:
+                raise ValueError("n <= 0")
+            self.a = np.float64(self.ui.line_a.text())
+            self.b = np.float64(self.ui.line_b.text())
+            if not np.isfinite([self.a, self.b]).all():
+                raise ValueError("Values are not finite.")
+            if self.a > self.b:
+                raise ValueError("a is greater than b.")
+        except ValueError as e:
+            QMessageBox.warning(self, "Invalid parameters", str(e))
+            return
+        self.ui.genKsiButton.setEnabled(True)
+        self.ui.tableX.clear()
+        self.ui.tableX.setRowCount(self.n)
+        self.ui.tableX.setColumnCount(self.n)
+        self.X = np.eye(self.n) # generate X here
+        for i in range(self.n):
+            for j in range(self.n):
+                self.ui.tableX.setItem(i, j, QTableWidgetItem(str(self.X[i, j])))
+        if self.theta is None:
+            self.ui.thetaTable.setEnabled(True)
+        if self.theta is None or self.theta.shape[0] != self.n:
+            self.theta = np.array([0] * self.n)
+            self.ui.thetaTable.setColumnCount(self.n)
+        for i in range(self.n):
+            self.ui.thetaTable.setItem(0, i, QTableWidgetItem(str(self.theta[i])))
+
+    @pyqtSlot()
+    def gen_ksi(self):
+        try:
+            self.scale = np.float64(self.ui.line_scale.text())
+            if self.scale <= 0:
+                raise ValueError("scale <= 0")
+        except ValueError as e:
+            QMessageBox.warning(self, "Invalid parameters", str(e))
+            return
+        self.ui.ksiList.clear()
+        self.ksi = np.array([0]*self.n) # generate ksi here
+        for val in self.ksi:
+            self.ui.ksiList.addItem(str(val))
+        self.ui.calcYbutton.setEnabled(True)
+
+    @pyqtSlot()
+    def change_s(self):
+        if self.rss is None or self.cp is None or self.fpe is None:
+            return
+        self.ui.lineRSS.setText(str(self.rss[self.ui.box_s.currentIndex()]))
+        self.ui.lineCP.setText(str(self.cp[self.ui.box_s.currentIndex()]))
+        self.ui.lineFPE.setText(str(self.fpe[self.ui.box_s.currentIndex()]))
+
+    @pyqtSlot()
+    def plot(self):
         pass
 
+    @pyqtSlot(int)
+    def distr_changed(self, index):
+        if index != 0:
+            self.normal_distr = True
+        else:
+            self.normal_distr = False
+
+    @pyqtSlot()
+    def calcY(self):
+        self.rss = np.arange(0, 5)
+        self.cp = np.arange(0, 5)
+        self.fpe = np.arange(0, 5)
+        self.change_s()
+
+    @pyqtSlot(QTableWidgetItem)
+    def theta_changed(self, item):
+        if self.theta is None:
+            return
+        newvalue = None
+        try:
+            newvalue = np.float64(item.text())
+            if not np.isfinite(newvalue).all():
+                raise ValueError("Values are not finite.")
+        except ValueError as e:
+            item.setText(str(self.theta[item.row()]))
+            return
+        self.theta[item.row()] = newvalue
 
