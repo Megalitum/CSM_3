@@ -7,6 +7,7 @@ from PyQt5.uic import loadUiType
 from model import FadingOscillation
 from rlsm import recursive_lsq
 import numpy as np
+from part2 import *
 
 form_class, base_class = loadUiType('main_window.ui')
 
@@ -22,6 +23,7 @@ class MainWindow(QDialog):
         self.ui.equationTable.setHorizontalHeaderLabels(["x", "x'", '-x"'])
         # << part 1
         # part 2 >>
+        self.m = 5
         self.n = None
         self.a = None
         self.b = None
@@ -94,10 +96,10 @@ class MainWindow(QDialog):
         self.ui.genKsiButton.setEnabled(True)
         self.ui.tableX.clear()
         self.ui.tableX.setRowCount(self.n)
-        self.ui.tableX.setColumnCount(self.n)
-        self.X = np.eye(self.n) # generate X here
+        self.ui.tableX.setColumnCount(self.m)
+        self.X = ksi_un(self.a, self.b, size = (self.n,self.m)) # generate X here
         for i in range(self.n):
-            for j in range(self.n):
+            for j in range(self.m):
                 self.ui.tableX.setItem(i, j, QTableWidgetItem(str(self.X[i, j])))
         if self.theta is None:
             self.ui.thetaTable.setEnabled(True)
@@ -117,7 +119,7 @@ class MainWindow(QDialog):
             QMessageBox.warning(self, "Invalid parameters", str(e))
             return
         self.ui.ksiList.clear()
-        self.ksi = np.array([0]*self.n) # generate ksi here
+        self.ksi =  distr(not self.normal_distr, self.scale, size = (self.n,1)) # generate ksi here
         for val in self.ksi:
             self.ui.ksiList.addItem(str(val))
         self.ui.calcYbutton.setEnabled(True)
@@ -143,9 +145,10 @@ class MainWindow(QDialog):
 
     @pyqtSlot()
     def calcY(self):
-        self.rss = np.arange(0, 5)
-        self.cp = np.arange(0, 5)
-        self.fpe = np.arange(0, 5)
+        r = manage(self.n, self.m, self.theta, self.X, self.ksi)
+        self.rss = r['rss']
+        self.cp = r['cp']
+        self.fpe = r['fse']
         self.change_s()
 
     @pyqtSlot(QTableWidgetItem)
