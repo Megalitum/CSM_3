@@ -108,6 +108,7 @@ class MainWindow(QDialog):
             self.ui.thetaTable.setColumnCount(self.m)
         for i in range(self.m):
             self.ui.thetaTable.setItem(0, i, QTableWidgetItem(str(self.theta[i])))
+        self.gen_ksi()
 
     @pyqtSlot()
     def gen_ksi(self):
@@ -119,7 +120,7 @@ class MainWindow(QDialog):
             QMessageBox.warning(self, "Invalid parameters", str(e))
             return
         self.ui.ksiList.clear()
-        self.ksi =  distr(not self.normal_distr, self.scale, size = (self.n,1)) # generate ksi here
+        self.ksi =  distr(not self.normal_distr, self.scale, size = (self.n, 1)) # generate ksi here
         for val in self.ksi:
             self.ui.ksiList.addItem(str(val))
         self.ui.calcYbutton.setEnabled(True)
@@ -174,7 +175,7 @@ class MainWindow(QDialog):
             if not np.isfinite(newvalue).all():
                 raise ValueError("Values are not finite.")
         except ValueError as e:
-            item.setText(str(self.theta[item.row()]))
+            item.setText(str(self.theta[item.column()]))
             return
-        self.theta[item.row()] = newvalue
+        self.theta[item.column()] = newvalue
 
