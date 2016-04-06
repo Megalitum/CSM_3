@@ -26,6 +26,8 @@ def distr(distr, scale, size):
     :param size:
     :return:
     """
+    if scale == 0:
+        return np.zeros(shape = size, dtype = float)
     if distr == True:
         return ksi_un(np.sqrt(3*scale), size = size)
     else:

@@ -113,8 +113,8 @@ class MainWindow(QDialog):
     def gen_ksi(self):
         try:
             self.scale = np.float64(self.ui.line_scale.text())
-            if self.scale <= 0:
-                raise ValueError("scale <= 0")
+            if self.scale < 0:
+                raise ValueError("scale < 0")
         except ValueError as e:
             QMessageBox.warning(self, "Invalid parameters", str(e))
             return
