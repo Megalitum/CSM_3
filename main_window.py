@@ -120,7 +120,7 @@ class MainWindow(QDialog):
             QMessageBox.warning(self, "Invalid parameters", str(e))
             return
         self.ui.ksiList.clear()
-        self.ksi =  distr(not self.normal_distr, self.scale, size = (self.n, 1)) # generate ksi here
+        self.ksi =  distr(not self.normal_distr, self.scale, size = (self.n,1)) # generate ksi here
         for val in self.ksi:
             self.ui.ksiList.addItem(str(val))
         self.ui.calcYbutton.setEnabled(True)
