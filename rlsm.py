@@ -2,6 +2,7 @@ import numpy as np
 
 
 def recursive_lsq(w: np.array, y: np.array):
+
     assert(w.shape[0] == y.shape[0])
     m = w.shape[1]
     def theta_generator():
@@ -35,8 +36,19 @@ def recursive_lsq(w: np.array, y: np.array):
 
 
 def test():
-    for theta in recursive_lsq(np.array([[1, 1, 2], [3, 4, 5], [5, 6, 7]]), np.array([1, 2, 3])):
-        print(theta)
+    X = np.identity(10)
+    for i in range(10):
+        X[i,0] = 1
+    y = np.arange(10)
+    th = []
+    for theta, rss in recursive_lsq(X, y):
+        print(th.append(theta))
+    print(np.dot(X, th[-1]))
+    #print(np.linalg.norm(np.linalg.lstsq(X,y)[3]))
+    print(np.dot(X,np.linalg.lstsq(X,y)[0]))
+
+    #for theta, rss in recursive_lsq(np.array([[1, 1, 2], [3, 4, 5], [5, 6, 7]]), np.array([1, 2, 3])):
+    #    print(theta,rss)
     #print(np.linalg.lstsq(np.array([[1, 1, 2], [3, 4, 5], [5, 6, 7]]), np.array([1, 2, 3])))
 
 test()
