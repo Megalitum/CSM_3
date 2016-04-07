@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>709</width>
-    <height>754</height>
+    <width>708</width>
+    <height>782</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,6 +24,133 @@
        <string>Відновлення параметрів коливання</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="1" colspan="2">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="minimumSize">
+          <size>
+           <width>171</width>
+           <height>121</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>171</width>
+           <height>121</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Параметри моделі</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="minimumSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>δ</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="2">
+           <widget class="QLineEdit" name="deltaInput">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>21</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>21</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>1</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label">
+            <property name="minimumSize">
+             <size>
+              <width>20</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>ω₀</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" colspan="2">
+           <widget class="QLineEdit" name="omegaInput">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>21</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>21</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>2</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>h</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_17">
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>10^</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QSpinBox" name="hDegreeBox">
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>21</height>
+             </size>
+            </property>
+            <property name="minimum">
+             <number>-4</number>
+            </property>
+            <property name="maximum">
+             <number>3</number>
+            </property>
+            <property name="value">
+             <number>-2</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item row="0" column="0" rowspan="7">
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
@@ -41,8 +168,20 @@
             <property name="columnCount">
              <number>3</number>
             </property>
+            <attribute name="horizontalHeaderCascadingSectionResizes">
+             <bool>true</bool>
+            </attribute>
             <attribute name="horizontalHeaderDefaultSectionSize">
              <number>100</number>
+            </attribute>
+            <attribute name="horizontalHeaderMinimumSectionSize">
+             <number>30</number>
+            </attribute>
+            <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>true</bool>
             </attribute>
             <column/>
             <column/>
@@ -52,167 +191,109 @@
          </layout>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QGroupBox" name="groupBox">
+       <item row="2" column="1" colspan="2">
+        <widget class="QGroupBox" name="groupBox_6">
          <property name="minimumSize">
           <size>
-           <width>222</width>
-           <height>101</height>
+           <width>171</width>
+           <height>91</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>222</width>
-           <height>101</height>
+           <width>171</width>
+           <height>91</height>
           </size>
          </property>
          <property name="title">
-          <string>Задані параметри</string>
+          <string>Кількість знаків після коми</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_2">
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QSpinBox" name="precisionBox">
             <property name="minimumSize">
              <size>
-              <width>59</width>
-              <height>16</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Delta</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="deltaInput">
-            <property name="minimumSize">
-             <size>
-              <width>81</width>
-              <height>21</height>
+              <width>0</width>
+              <height>20</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
-              <height>21</height>
+              <width>30</width>
+              <height>16777215</height>
              </size>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label">
-            <property name="minimumSize">
-             <size>
-              <width>51</width>
-              <height>16</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Omega0</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="omegaInput">
-            <property name="minimumSize">
-             <size>
-              <width>81</width>
-              <height>21</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>21</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QGroupBox" name="groupBox_5">
-         <property name="minimumSize">
-          <size>
-           <width>221</width>
-           <height>104</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>221</width>
-           <height>104</height>
-          </size>
-         </property>
-         <property name="title">
-          <string>Інтервал для t</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0">
-           <widget class="QLineEdit" name="leftT">
-            <property name="text">
-             <string>0</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>:</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QLineEdit" name="rightT">
-            <property name="text">
-             <string>1</string>
+            <property name="readOnly">
+             <bool>false</bool>
             </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string>Крок</string>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::NoButtons</enum>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1" colspan="2">
-           <widget class="QDoubleSpinBox" name="stepBox">
             <property name="minimum">
-             <double>0.000000000000000</double>
+             <number>5</number>
             </property>
             <property name="maximum">
-             <double>1.000000000000000</double>
+             <number>20</number>
             </property>
             <property name="singleStep">
-             <double>0.001000000000000</double>
+             <number>1</number>
             </property>
             <property name="value">
-             <double>0.010000000000000</double>
+             <number>10</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSlider" name="precisionSlider">
+            <property name="minimum">
+             <number>5</number>
+            </property>
+            <property name="maximum">
+             <number>20</number>
+            </property>
+            <property name="singleStep">
+             <number>1</number>
+            </property>
+            <property name="pageStep">
+             <number>2</number>
+            </property>
+            <property name="value">
+             <number>10</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedAppearance">
+             <bool>false</bool>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+            <property name="tickInterval">
+             <number>2</number>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="3" column="1" rowspan="2" colspan="2">
         <widget class="QPushButton" name="callerButton1">
          <property name="minimumSize">
           <size>
-           <width>231</width>
+           <width>171</width>
            <height>32</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>231</width>
+           <width>171</width>
            <height>32</height>
           </size>
          </property>
@@ -221,17 +302,17 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="6" column="1" colspan="2">
         <widget class="QGroupBox" name="groupBox_3">
          <property name="minimumSize">
           <size>
-           <width>222</width>
+           <width>171</width>
            <height>101</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>222</width>
+           <width>171</width>
            <height>101</height>
           </size>
          </property>
@@ -243,12 +324,12 @@
            <widget class="QLabel" name="label_4">
             <property name="minimumSize">
              <size>
-              <width>59</width>
+              <width>20</width>
               <height>16</height>
              </size>
             </property>
             <property name="text">
-             <string>Delta</string>
+             <string>δ</string>
             </property>
            </widget>
           </item>
@@ -256,7 +337,7 @@
            <widget class="QLineEdit" name="deltaOutput">
             <property name="minimumSize">
              <size>
-              <width>81</width>
+              <width>100</width>
               <height>21</height>
              </size>
             </property>
@@ -272,7 +353,7 @@
            <widget class="QLineEdit" name="omegaOutput">
             <property name="minimumSize">
              <size>
-              <width>81</width>
+              <width>100</width>
               <height>21</height>
              </size>
             </property>
@@ -288,30 +369,24 @@
            <widget class="QLabel" name="label_3">
             <property name="minimumSize">
              <size>
-              <width>51</width>
+              <width>20</width>
               <height>16</height>
              </size>
             </property>
             <property name="text">
-             <string>Omega0</string>
+             <string>ω₀</string>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="7" column="0" colspan="3">
         <widget class="QGroupBox" name="groupBox_4">
          <property name="minimumSize">
           <size>
            <width>221</width>
            <height>165</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>221</width>
-           <height>16777215</height>
           </size>
          </property>
          <property name="title">
@@ -324,7 +399,107 @@
          </layout>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="1" column="1" colspan="2">
+        <widget class="QGroupBox" name="groupBox_5">
+         <property name="minimumSize">
+          <size>
+           <width>171</width>
+           <height>138</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>171</width>
+           <height>138</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Параметри вибірки</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Крок</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>h*10^</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2" colspan="2">
+           <widget class="QSpinBox" name="stepMultBox">
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>5</number>
+            </property>
+            <property name="value">
+             <number>1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>Кількість</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2" colspan="2">
+           <widget class="QSpinBox" name="stepCountBox">
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>1000</number>
+            </property>
+            <property name="value">
+             <number>10</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2" colspan="2">
+           <widget class="QLineEdit" name="startT">
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>Початок</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="5" column="1" colspan="2">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -335,38 +510,10 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>5</height>
+           <height>50</height>
           </size>
          </property>
         </spacer>
-       </item>
-       <item row="2" column="1">
-        <widget class="QGroupBox" name="groupBox_6">
-         <property name="title">
-          <string>Кількість знаків після коми</string>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <widget class="QComboBox" name="precisionBox">
-            <item>
-             <property name="text">
-              <string>max</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>4</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>2</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-         </layout>
-        </widget>
        </item>
       </layout>
      </widget>
@@ -513,6 +660,12 @@
             <attribute name="verticalHeaderVisible">
              <bool>false</bool>
             </attribute>
+            <attribute name="verticalHeaderMinimumSectionSize">
+             <number>20</number>
+            </attribute>
+            <attribute name="verticalHeaderStretchLastSection">
+             <bool>true</bool>
+            </attribute>
             <row/>
             <column/>
             <column/>
@@ -593,7 +746,7 @@
           <item row="0" column="0">
            <widget class="QLabel" name="ksi_scale">
             <property name="text">
-             <string>Масштаб</string>
+             <string>σ²</string>
             </property>
            </widget>
           </item>
@@ -912,6 +1065,38 @@
     <hint type="destinationlabel">
      <x>346</x>
      <y>369</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>precisionSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>precisionBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>565</x>
+     <y>590</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>354</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>precisionBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>precisionSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>589</x>
+     <y>354</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>380</y>
     </hint>
    </hints>
   </connection>

@@ -26,7 +26,7 @@ class FadingOscillation(object):
 
     def __call__(self, *args, **kwargs):
         t = args[0]
-        return self.calc_value(t), self.calc_derivative(t), self.calc_detivative_2(t)
+        return self.calc_value(t - self.step), self.calc_value(t), self.calc_value(t + self.step)
 
     def test(self):
         X = np.arange(0, 10, 0.01)
@@ -40,5 +40,4 @@ class FadingOscillation(object):
     def test_ls(self):
         X = np.arange(0, 10, 0.01)
         z = self(X)
-        print(np.linalg.lstsq(np.hstack((z[0][:, np.newaxis], z[1][:, np.newaxis])), -z[2]))
-
+        print(np.linalg.lstsq(np.hstack((z[0][:, np.newaxis], z[1][:, np.newaxis])), z[2]))
