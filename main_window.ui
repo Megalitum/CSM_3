@@ -232,6 +232,9 @@
             <property name="buttonSymbols">
              <enum>QAbstractSpinBox::NoButtons</enum>
             </property>
+            <property name="minimum">
+             <number>5</number>
+            </property>
             <property name="maximum">
              <number>20</number>
             </property>
@@ -246,7 +249,7 @@
           <item>
            <widget class="QSlider" name="precisionSlider">
             <property name="minimum">
-             <number>1</number>
+             <number>5</number>
             </property>
             <property name="maximum">
              <number>20</number>
