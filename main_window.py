@@ -5,8 +5,6 @@ from PyQt5.QtWidgets import QDialog, QMessageBox, QTableWidgetItem
 from PyQt5.uic import loadUiType
 
 from model import FadingOscillation
-from rlsm import recursive_lsq
-import numpy as np
 from part2 import *
 
 form_class, base_class = loadUiType('main_window.ui')
@@ -20,7 +18,7 @@ class MainWindow(QDialog):
         # part 1 >>
         self.ui.deltaInput.setText(str(1.))
         self.ui.omegaInput.setText(str(2.))
-        self.ui.equationTable.setHorizontalHeaderLabels(["x", "x'", '-x"'])
+        self.ui.equationTable.setHorizontalHeaderLabels(["x(n-1)", "x(n)", 'x(n+1)'])
         # << part 1
         # part 2 >>
         self.m = 5
@@ -42,41 +40,37 @@ class MainWindow(QDialog):
     def run_1(self):
         delta = 0
         omega0 = 0
-        left = 0
-        right = 0
         try:
             delta = np.float64(self.ui.deltaInput.text())
             omega0 = np.float64(self.ui.omegaInput.text())
-            left = np.float64(self.ui.leftT.text())
-            right = np.float64(self.ui.rightT.text())
-            if not np.isfinite([delta, omega0, left, right]).all():
+            start = np.float64(self.ui.startT.text())
+            if not np.isfinite([delta, omega0, start]).all():
                 raise ValueError("Values are not finite.")
             if delta > omega0:
                 raise ValueError("Delta is greater than omega0.")
-            if left > right:
-                raise ValueError("Left is greater than right.")
         except ValueError as e:
             QMessageBox.warning(self, "Invalid parameters", str(e))
             return
-        model = FadingOscillation(delta, omega0)
-        t_arr = np.arange(left, right, self.ui.stepBox.value())
+        h = 10**self.ui.hDegreeBox.value()
+        steps_count = self.ui.stepCountBox.value()
+        data_h = h * 10**self.ui.stepMultBox.value()
+        model = FadingOscillation(delta, omega0, step=h)
+        t_arr = np.arange(start, start + steps_count * data_h, data_h)
         X = np.array(list(model(t_arr))).T
-        precision = self.ui.precisionBox.currentText()
-        if precision != 'max':
-            deg = int(precision)
-            X = np.round(10**deg * X) / 10**deg;
+        precision = self.ui.precisionBox.value()
+        X = np.around(X, decimals=precision)
         self.ui.equationTable.setRowCount(len(t_arr))
         for i, row in enumerate(X):
-            self.ui.equationTable.setItem(i, 0, QTableWidgetItem(str(row[0])))
-            self.ui.equationTable.setItem(i, 1, QTableWidgetItem(str(row[1])))
-            self.ui.equationTable.setItem(i, 2, QTableWidgetItem(str(-row[2])))
-        theta_gen = recursive_lsq(X[:, :2], -X[:, 2])
-        theta_list = [theta for theta, rss in theta_gen]
+            for j in range(3):
+                self.ui.equationTable.setItem(i, j, QTableWidgetItem(str(row[j])))
+        theta_gen = recursive_lsq(X[:, :2], X[:, 2])
         self.ui.thetaList.clear()
-        for theta in theta_list:
+        result = None
+        for theta, rss in theta_gen:
             self.ui.thetaList.addItem(str(theta.tolist()))
-        self.ui.deltaOutput.setText(str(theta_list[-1][1] / 2))
-        self.ui.omegaOutput.setText(str(np.sqrt(theta_list[-1][0])))
+            result = theta
+        self.ui.deltaOutput.setText(str(1 + result[0] / (1 - result[0]) / h))
+        self.ui.omegaOutput.setText(str(np.sqrt(2 * (1 - result[0] - result[1]) / (1 - result[0])) / h))
 
 
     @pyqtSlot()
