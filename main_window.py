@@ -69,7 +69,7 @@ class MainWindow(QDialog):
         for theta, rss in theta_gen:
             self.ui.thetaList.addItem(str(theta.tolist()))
             result = theta
-        self.ui.deltaOutput.setText(str(1 + result[0] / (1 - result[0]) / h))
+        self.ui.deltaOutput.setText(str((1 + result[0]) / (1 - result[0]) / h))
         self.ui.omegaOutput.setText(str(np.sqrt(2 * (1 - result[0] - result[1]) / (1 - result[0])) / h))
 
 
