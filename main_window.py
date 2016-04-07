@@ -1,7 +1,7 @@
 # coding: utf8
 
 from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QDialog, QMessageBox, QTableWidgetItem
+from PyQt5.QtWidgets import QDialog, QMessageBox, QTableWidgetItem, QHeaderView
 from PyQt5.uic import loadUiType
 
 from model import FadingOscillation
@@ -98,7 +98,9 @@ class MainWindow(QDialog):
         self.ui.tableX.clear()
         self.ui.tableX.setRowCount(self.n)
         self.ui.tableX.setColumnCount(self.m)
+        self.ui.tableX.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.X = ksi_un(self.a, self.b, size = (self.n,self.m)) # generate X here
+        print('X = \n',self.X)
         for i in range(self.n):
             for j in range(self.m):
                 self.ui.tableX.setItem(i, j, QTableWidgetItem(str(self.X[i, j])))
@@ -106,6 +108,7 @@ class MainWindow(QDialog):
             self.ui.thetaTable.setEnabled(True)
             self.theta = np.array([0] * self.m)
             self.ui.thetaTable.setColumnCount(self.m)
+            self.ui.thetaTable.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         for i in range(self.m):
             self.ui.thetaTable.setItem(0, i, QTableWidgetItem(str(self.theta[i])))
         self.gen_ksi()
@@ -121,6 +124,7 @@ class MainWindow(QDialog):
             return
         self.ui.ksiList.clear()
         self.ksi =  distr(not self.normal_distr, self.scale, size = (self.n,1)) # generate ksi here
+        print('ksi\n',self.ksi)
         for val in self.ksi:
             self.ui.ksiList.addItem(str(val))
         self.ui.calcYbutton.setEnabled(True)
